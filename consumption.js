@@ -1,5 +1,5 @@
 var sum = 0.0;
-var date_n = new Date(); //current time
+var date_n = new Date();
 var currentTime = date_n;
 var currentDay = currentTime.getDay();
 var wednesday = 3;
@@ -23,7 +23,6 @@ for (i = 18; i < document.getElementsByTagName('tr').length - 4; i++){
 
 	if(date > last_wednesday){	
 		sum += d;
-		//console.log(date);
 	}
 
 }
