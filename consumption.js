@@ -4,7 +4,7 @@ var currentTime = date_n;
 var currentDay = currentTime.getDay();
 var wednesday = 3;
 var daysBack, pastDate;
-if(currentDay > wednesday){
+if(currentDay >= wednesday){
 	daysBack = currentDay - wednesday;
 }
 else{
