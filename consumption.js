@@ -16,6 +16,10 @@ last_wednesday = new Date(date_n.getFullYear(),date_n.getMonth(), date_n.getDate
 for (i = 18; i < document.getElementsByTagName('tr').length - 4; i++){
 
 	d = parseFloat(document.getElementsByTagName('tr')[i].childNodes[6].innerHTML.split(' ')[0]);
+	data_size = document.getElementsByTagName('tr')[i].childNodes[6].innerHTML.split(' ')[1];
+	
+	if(data_size == "KB") d/=1024;
+	else if(data_size == "GB") d*=1024;
 
 	date = new Date(document.getElementsByTagName('tr')[i].childNodes[3].innerHTML + ", 2015");
 
@@ -26,4 +30,4 @@ for (i = 18; i < document.getElementsByTagName('tr').length - 4; i++){
 	}
 
 }
-alert("downloaded = " + sum);
+alert("downloaded = " + sum + "MB");
