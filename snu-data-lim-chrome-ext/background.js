@@ -38,7 +38,7 @@ function calcConsumption(input){
 	}
 
 
-	response = "Data Downloaded: " + sum + " MB" + "<br>" + "Percentage Data: " + sum/30 + "%";
+	response = "<b>Data Downloaded:</b> " + sum + " MB" + "<br>" + "<b>Percentage Data:</b> " + sum/30 + "%";
 	console.log(response);
 	
   chrome.runtime.sendMessage(
@@ -48,12 +48,30 @@ function calcConsumption(input){
 function ajaxReq() {
   //your code here
 	//alert("welcome!");
-
+	uid='00000';
+	chrome.storage.sync.get({
+	    userID: '00000'
+	  }, function(items) {
+	    uid = items.userID;
+	    $.ajax({
+		  url: 'http://192.168.50.1/24online/servlet/AjaxManager',
+		  type: 'GET',
+		  data: 'mode=740&ran=0.5069594494998455&selectedyear=2015&userid='+uid,
+		  success: function(data) {
+			//called when successful
+			calcConsumption(data);
+		  },
+		  error: function(e) {
+			//called when there is an error
+			console.log(e.message);
+		  }
+		});
+	  });
 
 	$.ajax({
 	  url: 'http://192.168.50.1/24online/servlet/AjaxManager',
 	  type: 'GET',
-	  data: 'mode=740&ran=0.5069594494998455&selectedyear=2015&userid=20975',
+	  data: 'mode=740&ran=0.5069594494998455&selectedyear=2015&userid='+uid,
 	  success: function(data) {
 		//called when successful
 		calcConsumption(data);

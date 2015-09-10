@@ -5,7 +5,15 @@ function doSomethingAfterwards(response){
 
 window.onload = function() {
 
-  chrome.runtime.sendMessage(
+
+  chrome.storage.sync.get({
+    userID: '00000'
+  }, function(items) {
+    if(items.userID == '00000') {
+      document.getElementById("data").innerHTML = "Goto <a target='_blank' href='chrome://extensions/'>chrome://extensions/</a> and set your UserID in this Extensions Settings";
+    }
+    else{
+      chrome.runtime.sendMessage(
     {from: "popup", action: "doAjaxReq"},
     doSomethingAfterwards
   );
@@ -23,5 +31,9 @@ window.onload = function() {
     }
   }
 });
+    }
+  });
+
+  
 
 }
