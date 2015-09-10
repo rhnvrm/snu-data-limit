@@ -1,6 +1,6 @@
 // Saves options to chrome.storage.sync.
 function save_options() {
-  var uid = document.getElementById('uid').value;
+  var uid = document.getElementById('uid').value.slice(-5);
 
   chrome.storage.sync.set({
     userID: uid

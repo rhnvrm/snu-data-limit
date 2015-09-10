@@ -19,6 +19,7 @@ function calcConsumption(input){
 	last_wednesday = new Date(date_n.getFullYear(),date_n.getMonth(), date_n.getDate() - daysBack);
 		//console.log(last_wednesday);
 	
+	var last_updated;
 
 	for (i in input){
 
@@ -35,10 +36,14 @@ function calcConsumption(input){
 			sum += d;
 		}
 
+		
+
 	}
 
+	last_updated = input[0].stoptime;
 
-	response = "<b>Data Downloaded:</b> " + sum + " MB" + "<br>" + "<b>Percentage Data:</b> " + sum/30 + "%";
+	response = "<b>Data Downloaded:</b> " + sum + " MB" + "<br>" + "<b>Percentage Data:</b> " + sum/30 + "%" + 
+			"<br>" + "<b>Last Updated:</b> " + last_updated + "<br>";
 	console.log(response);
 	
   chrome.runtime.sendMessage(
