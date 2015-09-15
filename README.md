@@ -2,7 +2,6 @@
 A small script and a Chrome Extension that calculates the data you have downloaded since the last wednesday for Shiv Nadar University
 
 # Using the Chrome Extension v2
-Note: See issue #4 if you are on Windows
 1. Download the .crx file given in the repo from here: https://github.com/rhnvrm/snu-data-limit/raw/master/snu-data-lim-chrome-ext.crx
 2. Install the chrome extension.
 3. Login at http://192.168.50.1/24online/webpages/myaccountlogin.jsp using your SNU ID in the following format for user name: pq123@snu.in 
@@ -10,6 +9,8 @@ Note: See issue #4 if you are on Windows
 5. Copy your Account No 
 3. Paste the UserID in the Chrome Extension's Options page (accessible from chrome://extensions/ )
 4. Click on the Extensions View Popup button in your menu bar.
+
+## Note: See issue #4 if you are on Windows
 
 # Using the console
 1. Open http://192.168.50.1/24online/webpages/myaccount/usagedetail.jsp
