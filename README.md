@@ -1,6 +1,9 @@
 # snu-data-limit
 A small script and a Chrome Extension that calculates the data you have downloaded since the last wednesday for Shiv Nadar University
 
+<a target="_blank" href="https://chrome.google.com/webstore/detail/snudatalimit/mfjinloagcpmfacpjnlabcflnkbajidd">![Try it now in CWS](https://raw.github.com/GoogleChrome/chrome-app-samples/master/tryitnowbutton.png "Click here to install this sample from the Chrome Web Store")</a>
+
+
 # Using the Chrome Extension v2
 1. Download the .crx file given in the repo from here: https://github.com/rhnvrm/snu-data-limit/raw/master/snu-data-lim-chrome-ext.crx
 2. Install the chrome extension.
