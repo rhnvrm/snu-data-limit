@@ -3,6 +3,7 @@ var globalres;
 function calcConsumption(input){
 	//console.log(input);
 
+
 	var sum = 0.0;
 	var date_n = new Date();
 	var currentTime = date_n;
@@ -39,12 +40,17 @@ function calcConsumption(input){
 		
 
 	}
+	if(input.length){
+		last_updated = input[0].stoptime;
+	}
+	else{
+		last_updated = 'empty response recd, try again later!';
+	}
 
-	last_updated = input[0].stoptime;
 
 	response = "<b>Data Downloaded:</b> " + sum + " MB" + "<br>" + "<b>Percentage Data:</b> " + sum/30 + "%" + 
 			"<br>" + "<b>Last Updated:</b> " + last_updated + "<br>";
-	console.log(response);
+	//console.log(response);
 	
   chrome.runtime.sendMessage(
     {from: "bg", action: "updateData", value: response}
@@ -53,6 +59,8 @@ function calcConsumption(input){
 function ajaxReq() {
   //your code here
 	//alert("welcome!");
+	var currentMonth = (new Date()).getMonth()+1;
+	var currentYear  = (new Date()).getYear() -100 +2000;
 	uid='00000';
 	chrome.storage.sync.get({
 	    userID: '00000'
@@ -61,10 +69,13 @@ function ajaxReq() {
 	    $.ajax({
 		  url: 'http://192.168.50.1/24online/servlet/AjaxManager',
 		  type: 'GET',
-		  data: 'mode=740&ran=0.5069594494998455&selectedyear=2015&userid='+uid,
+		  data: 'mode=740&selectedyear=2015&selectedmonth='+currentMonth+'&userid='+uid,
 		  success: function(data) {
 			//called when successful
+			//console.log(data);
 			calcConsumption(data);
+
+
 		  },
 		  error: function(e) {
 			//called when there is an error
@@ -72,20 +83,24 @@ function ajaxReq() {
 		  }
 		});
 	  });
-
+/*
 	$.ajax({
 	  url: 'http://192.168.50.1/24online/servlet/AjaxManager',
 	  type: 'GET',
-	  data: 'mode=740&ran=0.5069594494998455&selectedyear=2015&userid='+uid,
+	  data: 'mode=740&selectedyear=2015&selectedmonth='+currentMonth+'&userid='+uid,
 	  success: function(data) {
 		//called when successful
-		calcConsumption(data);
+		if(data != [])
+			calcConsumption(data);
+		else{
+			console.log('empty data rec');
+		}
 	  },
 	  error: function(e) {
 		//called when there is an error
 		console.log(e.message);
 	  }
-	});
+	});*/
 
 
 }
