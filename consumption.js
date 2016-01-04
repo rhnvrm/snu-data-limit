@@ -4,6 +4,7 @@ var currentTime = date_n;
 var currentDay = currentTime.getDay();
 var wednesday = 3;
 var daysBack, pastDate;
+var currentYear  = (new Date()).getYear() -100 +2000;
 if(currentDay >= wednesday){
 	daysBack = currentDay - wednesday;
 }
@@ -21,7 +22,7 @@ for (i = 18; i < document.getElementsByTagName('tr').length - 4; i++){
 	if(data_size == "KB") d/=1024;
 	else if(data_size == "GB") d*=1024;
 
-	date = new Date(document.getElementsByTagName('tr')[i].childNodes[3].innerHTML + ", 2015");
+	date = new Date(document.getElementsByTagName('tr')[i].childNodes[3].innerHTML +  ", " + currentYear);
 
 
 

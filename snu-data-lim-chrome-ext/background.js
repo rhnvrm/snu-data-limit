@@ -10,6 +10,7 @@ function calcConsumption(input){
 	var currentDay = currentTime.getDay();
 	var wednesday = 3;
 	var daysBack, pastDate;
+	var currentYear  = (new Date()).getYear() -100 +2000;
 	if(currentDay >= wednesday){
 		daysBack = currentDay - wednesday;
 	}
@@ -26,7 +27,7 @@ function calcConsumption(input){
 
 		var x = input[i];
 
-		date = new Date(x.stoptime + ", 2015");
+		date = new Date(x.stoptime + ", " + currentYear);
 		//console.log(date);
 		d = parseFloat(x.download.split(' ')[0]);
 		data_size= x.download.split(' ')[1];
@@ -59,7 +60,7 @@ function calcConsumption(input){
 function ajaxReq() {
   //your code here
 	//alert("welcome!");
-	var currentMonth = (new Date()).getMonth()+1;
+	var currentMonth = (new Date()).getMonth();
 	var currentYear  = (new Date()).getYear() -100 +2000;
 	uid='00000';
 	chrome.storage.sync.get({
@@ -69,7 +70,7 @@ function ajaxReq() {
 	    $.ajax({
 		  url: 'http://192.168.50.1/24online/servlet/AjaxManager',
 		  type: 'GET',
-		  data: 'mode=740&selectedyear=2015&selectedmonth='+currentMonth+'&userid='+uid,
+		  data: 'mode=740&selectedyear='+currentYear+'&selectedmonth='+currentMonth+'&userid='+uid,
 		  success: function(data) {
 			//called when successful
 			//console.log(data);
