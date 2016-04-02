@@ -29,10 +29,8 @@ function calcConsumption(input){
 
 		date = new Date(x.stoptime + ", " + currentYear);
 		//console.log(date);
-		d = parseFloat(x.download.split(' ')[0]);
-		data_size= x.download.split(' ')[1];
-		if(data_size == "KB") d/=1024;
-		else if(data_size == "GB") d*=1024;
+		d = parseFloat(x.download.split(' ')[0])/(1024*1024);
+		
 
 		if(date > last_wednesday){	
 			sum += d;
@@ -49,8 +47,9 @@ function calcConsumption(input){
 	}
 
 
-	response = "<b>Data Downloaded:</b> " + sum + " MB" + "<br>" + "<b>Percentage Data:</b> " + sum/30 + "%" + 
-			"<br>" + "<b>Last Updated:</b> " + last_updated + "<br>";
+	response = "<b>Data Downloaded:</b>&emsp;" + sum.toFixed(3) + " MB" + "<br>" 
+				+ "<b>Percentage Data:</b>&emsp;" + (sum/30).toFixed(3) + "%" + 
+				"<br>" + "<b>Last Updated:</b>&emsp;" + last_updated + "<br>";
 	//console.log(response);
 	
   chrome.runtime.sendMessage(
