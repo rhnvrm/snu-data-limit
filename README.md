@@ -3,6 +3,8 @@ A small script and a Chrome Extension that calculates the data you have download
 
 <a target="_blank" href="https://chrome.google.com/webstore/detail/snudatalimit/mfjinloagcpmfacpjnlabcflnkbajidd">![Try it now in CWS](https://raw.github.com/GoogleChrome/chrome-app-samples/master/tryitnowbutton.png "Click here to install this sample from the Chrome Web Store")</a>
 
+![screens/sample.png](screens/sample.png)
+
 
 ## Obtaining your own UID
 1. Install the chrome extension.
