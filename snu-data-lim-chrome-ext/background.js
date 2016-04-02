@@ -60,6 +60,7 @@ function ajaxReq() {
   //your code here
 	//alert("welcome!");
 	var currentMonth = (new Date()).getMonth();
+	var previousMonth = (new Date()).getMonth() - 1;
 	var currentYear  = (new Date()).getYear() -100 +2000;
 	uid='00000';
 	chrome.storage.sync.get({
@@ -70,10 +71,25 @@ function ajaxReq() {
 		  url: 'http://192.168.50.1/24online/servlet/AjaxManager',
 		  type: 'GET',
 		  data: 'mode=740&selectedyear='+currentYear+'&selectedmonth='+currentMonth+'&userid='+uid,
-		  success: function(data) {
-			//called when successful
-			//console.log(data);
-			calcConsumption(data);
+		  success: function(data1) {
+				$.ajax({
+			 	  url: 'http://192.168.50.1/24online/servlet/AjaxManager',
+				  type: 'GET',
+				  data: 'mode=740&selectedyear='+currentYear+'&selectedmonth='+ previousMonth +'&userid='+uid,
+				  success: function(data2) {
+					//called when successful
+					console.log(data1);
+					console.log(data2);
+					
+					calcConsumption(data1.concat(data2));
+
+
+				  },
+				  error: function(e) {
+					//called when there is an error
+					console.log(e.message);
+				  }
+			});
 
 
 		  },
