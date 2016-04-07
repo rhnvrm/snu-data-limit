@@ -1,8 +1,8 @@
 var globalres;
 
 function calcConsumption(input){
-	//console.log(input);
-
+	
+	input = input.sort(function(a, b){return new Date(b.stoptime) - new Date(a.stoptime)})
 
 	var sum = 0.0;
 	var date_n = new Date();
@@ -78,8 +78,8 @@ function ajaxReq() {
 				  data: 'mode=740&selectedyear='+currentYear+'&selectedmonth='+ previousMonth +'&userid='+uid,
 				  success: function(data2) {
 					//called when successful
-					console.log(data1);
-					console.log(data2);
+					//console.log(data1);
+					//console.log(data2);
 					
 					calcConsumption(data1.concat(data2));
 
