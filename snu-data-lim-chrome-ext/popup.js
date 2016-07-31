@@ -5,7 +5,6 @@ function doSomethingAfterwards(response){
 
 window.onload = function() {
 
-
   chrome.storage.sync.get({
     userID: '00000'
   }, function(items) {
