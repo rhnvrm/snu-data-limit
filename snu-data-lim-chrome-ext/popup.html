@@ -2,24 +2,57 @@
 <head>
 	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
 	<style type="text/css">
-	
+		.span6 {
+		  float: left;
+		  width: 50%;
+		}
+		.chart {
+		  position: relative;
+		  display: inline-block;
+		  width: 110px;
+		  height: 110px;
+		  margin-left: 50px;
+		  margin-right: 50px;
+		  text-align: center;
+		}
+		.chart canvas {
+		  position: absolute;
+		  top: 0;
+		  left: 0;
+		}
+		.percent {
+		  display: inline-block;
+		  line-height: 110px;
+		  z-index: 2;
+		}
+		.percent:after {
+		  content: '%';
+		  margin-left: 0.1em;
+		  font-size: .8em;
+		}
+		button{
+			font-size: 11px;
+		}
 	</style>
 	<script src="popup.js"></script>
 	<script type="text/javascript" src="jquery-2.1.4.min.js"></script>
-
+	<script type="text/javascript" src="jquery.easypiechart.min.js"></script> 
 </head>
 <body bgcolor="#f3f3f3" >
 
-<div id="container" style="height: 85px; width: 210px;">
-<div id="data" >Updating...</div>
+<div id="container" style="height: 195px; width: 210px;">
 
-<br>
+	<div class="chart" id="graph" data-percent="0">
+		<span id="pcent" class="percent">0</span>
+	</div> <br>
 
-<center>
-made by <a  target="_blank" href="http://rohanverma.net">rhnvrm</a> with <i class="fa fa-heart"></i> on <a  target="_blank" href = "http://github.com/rhnvrm/snu-data-limit">github</a>
-<br>
-<i style="font-size: 6px">if the heart fails to load... you are not connected to the internet</i>
-</center>
+	<div id="data">Updating...</div>
+
+	<center>
+		<button id="logout">Logout</button><button id="options">Options</button><br>
+		<span id="status"></span><br>
+		star <i class="fa fa-star"></i> this on <a  target="_blank" href = "http://github.com/rhnvrm/snu-data-limit">github</a>
+		</center>
 </div>
 </body>
 </html>

@@ -31,13 +31,9 @@ function calcConsumption(input){
 		//console.log(date);
 		d = parseFloat(x.download.split(' ')[0])/(1024*1024);
 		
-
 		if(date > last_wednesday){	
 			sum += d;
 		}
-
-		
-
 	}
 	if(input.length){
 		last_updated = input[0].stoptime;
@@ -46,22 +42,21 @@ function calcConsumption(input){
 		last_updated = 'empty response recd, try again later!';
 	}
 
+	response = {
+		data_used: sum.toFixed(3),
+		data_used_in_percent: (sum/30).toFixed(3),
+		last_updated: last_updated
+	}
 
-	response = "<b>Data Downloaded:</b>&emsp;" + sum.toFixed(3) + " MB" + "<br>" 
-				+ "<b>Percentage Data:</b>&emsp;" + (sum/30).toFixed(3) + "%" + 
-				"<br>" + "<b>Last Updated:</b>&emsp;" + last_updated + "<br>";
-	//console.log(response);
-	
   chrome.runtime.sendMessage(
     {from: "bg", action: "updateData", value: response}
   );
 }
-function ajaxReq() {
-  //your code here
-	//alert("welcome!");
+
+function requestData() {
 	var currentMonth = (new Date()).getMonth();
 	var previousMonth = (new Date()).getMonth() - 1;
-	var currentYear  = (new Date()).getYear() -100 +2000;
+	var currentYear  = (new Date()).getYear() - 100 + 2000;
 	uid='00000';
 	chrome.storage.sync.get({
 	    userID: '00000'
@@ -77,61 +72,66 @@ function ajaxReq() {
 				  type: 'GET',
 				  data: 'mode=740&selectedyear='+currentYear+'&selectedmonth='+ previousMonth +'&userid='+uid,
 				  success: function(data2) {
-					//called when successful
-					//console.log(data1);
-					//console.log(data2);
-					
-					calcConsumption(data1.concat(data2));
-
-
+						calcConsumption(data1.concat(data2));
 				  },
 				  error: function(e) {
-					//called when there is an error
-					console.log(e.message);
+						console.log(e.message);
 				  }
 			});
 
 
 		  },
 		  error: function(e) {
-			//called when there is an error
-			console.log(e.message);
+				console.log(e.message);
 		  }
 		});
 	  });
-/*
-	$.ajax({
-	  url: 'http://192.168.50.1/24online/servlet/AjaxManager',
-	  type: 'GET',
-	  data: 'mode=740&selectedyear=2015&selectedmonth='+currentMonth+'&userid='+uid,
-	  success: function(data) {
-		//called when successful
-		if(data != [])
-			calcConsumption(data);
-		else{
-			console.log('empty data rec');
-		}
-	  },
-	  error: function(e) {
-		//called when there is an error
-		console.log(e.message);
-	  }
-	});*/
+}
 
+function sendLogoutRequest(user) {
+  chrome.storage.sync.get({userName: '00000'}, function(items){
+    var user = items.userName;
+    var data = "mode=193&isAccessDenied=null&url=null&message=&checkClose=1&sessionTimeout=0&guestmsgreq=true&logintype=1&orgSessionTimeout=0&chrome=-1&alerttime=null&timeout=0&popupalert=0&dtold=0&mac=&servername=192.168.50.1&profilegroupid=1&profileName=SNU&username="+user+"&usernameTyped=&password=&saveinfo=&loginotp=false&logincaptcha=false®isteruserotp=false®istercaptcha=false";
 
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.addEventListener("readystatechange", function () {
+      if (this.readyState === 4) {
+        console.log("Attemting Logout!");
+        chrome.runtime.sendMessage(
+          {from: "bg", action: "updateData", value: response}
+        );
+      }
+    });
+
+    xhr.open("POST", "http://192.168.50.1/24online/servlet/E24onlineHTTPClient");
+    xhr.setRequestHeader("pragma", "no-cache");
+    xhr.setRequestHeader("origin", "null");
+    xhr.setRequestHeader("accept-encoding", "gzip, deflate");
+    xhr.setRequestHeader("accept-language", "en-US,en;q=0.8");
+    xhr.setRequestHeader("upgrade-insecure-requests", "1");
+    xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+    xhr.setRequestHeader("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+    xhr.setRequestHeader("cache-control", "no-cache");
+    xhr.setRequestHeader("connection", "keep-alive");
+    xhr.send(data);
+  });
 }
 
 chrome.runtime.onMessage.addListener( function(message, sender, sendResponse) {
   if(message.from && message.from === "popup"){
     switch(message.action){
-      case "doAjaxReq":
+      case "getData":
         /* Do something */
-        ajaxReq();
+        requestData();
         /* Maybe sendResponse(something) */
         sendResponse(globalres)
         break;
     }
   }
+  if(message.action === "sendLogoutRequest"){
+  	sendLogoutRequest(message.username);
+  	sendResponse("Attemting.")
+  }
 });
-
-//http://192.168.50.1/24online/servlet/AjaxManager?mode=740&ran=0.5069594494998455&selectedyear=2015&userid=20975
