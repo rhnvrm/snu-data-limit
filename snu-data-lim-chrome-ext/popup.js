@@ -7,13 +7,10 @@ function update_status(status_message){
 }
 
 function logout() {
-  chrome.storage.sync.get({userName: '00000'}, function(items){
-    var user = items.userName;
-    chrome.runtime.sendMessage(
-      {from: "options", action: "sendLogoutRequest", username: user},
-      update_status("Sent Logout Request.")
-    );
-  });
+  chrome.runtime.sendMessage(
+    {from: "options", action: "sendLogoutRequest"},
+    update_status("Sent Logout Request.")
+  );
 }
 
 function build_graph_from_data(data){
@@ -66,8 +63,8 @@ window.onload = function() {
     userID: '00000',
     userName: 'pq123'
   }, function(items) {
-    if(items.userID == '00000' || items.userName === 'pq123') {
-      document.getElementById("data").innerHTML = "Welcome! <br>Please set your UserID and UserName in our extension's <a target='_blank' href='options.html'>options page</a>.";
+    if(items.userID == '00000') {
+      document.getElementById("data").innerHTML = "Welcome! <br>Please set your UserID in our extension's <a target='_blank' href='options.html'>options page</a> to be updated with your data limit. You can click on the Logout Button to logout.";
     }
     else {
       chrome.runtime.sendMessage(
