@@ -25,10 +25,11 @@ function calcConsumption(input){
 	for (i in input){
 
 		var x = input[i];
+		console.log(x);
 
 		date = new Date(x.stoptime + ", " + currentYear);
 
-		d = parseFloat(x.download.split(' ')[0])/(1024*1024);
+		d = parseFloat(x.totaltransfer.split(' ')[0])/(1024*1024);
 		
 		if(date > last_wednesday){	
 			sum += d;
